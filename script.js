@@ -27,13 +27,13 @@ function generatePassword() {
   var numericString = "1234567890";
   var specialString = "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~";
   // String for storing characters available for use in generation
-  var availableCharacters = "" ; 
+  var availableCharacters = "";
   // Array of available characters for random generation
-  var availableArray ;
+  var availableArray;
   // password string that will store random characters and be returned at end
-  var passwordString ; 
-  var randomAvailableIndex ; // random index value of availableArray
-  
+  var passwordString ;
+  var randomAvailableIndex; // random index value of availableArray
+
   // Prompt for password length 
   pwLength = prompt("Enter a password length between 8 and 128 characters:");
 
@@ -60,27 +60,47 @@ function generatePassword() {
     if (lowercaseBool || uppercaseBool || numericBool || specialBool) {
       // Concatenate characters to availableCharacters string if its boolean is true
       if (lowercaseBool) {
-        availableCharacters = availableCharacters.concat(lowercaseString) ;
+        availableCharacters = availableCharacters.concat(lowercaseString);
       }
       if (uppercaseBool) {
-        availableCharacters = availableCharacters.concat(uppercaseString) ;
+        availableCharacters = availableCharacters.concat(uppercaseString);
       }
       if (numericBool) {
-        availableCharacters = availableCharacters.concat(numericString) ;
+        availableCharacters = availableCharacters.concat(numericString);
       }
       if (specialBool) {
-        availableCharacters = availableCharacters.concat(specialString) ;
+        availableCharacters = availableCharacters.concat(specialString);
       }
+      console.log("available chars " + availableCharacters);
+      // Put character set into an array
+      availableArray = availableCharacters.split('');
+      console.log("array length " + availableArray.length);
+      passwordString = "" ;
+
+      // Use a for loop to generate password
+      // Will run from 0 until it hits the value of pwLength variable
+      // Each character in the string will be randomly selected from availableCharacters array
+
+      for (var i = 0; i < pwLength; i++) {
+        randomAvailableIndex = Math.floor(Math.random() * availableArray.length);
+        console.log("index " + randomAvailableIndex) ;
+        console.log("value " + availableArray[randomAvailableIndex]) ;
+        console.log("pw string " + passwordString) ; 
+        passwordString = passwordString.concat(availableArray[randomAvailableIndex]);
+      }
+
+      console.log("final pw string " + passwordString) ;
+      return passwordString;
+
     } else {
-      alert("At least one character type must be selected") ;
-      generatePassword() ;
+      alert("At least one character type must be selected");
+      generatePassword();
     }
-    // Put character set into an array
-    availableArray = availableCharacters.split('') ;
+
+
+
   } else {
     alert("Password length must be a number between 8 and 128");
     generatePassword();
   }
-
-
 }
